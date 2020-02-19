@@ -2,17 +2,11 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {Route, Switch, Link} from 'react-router-dom';
-import HomePage from './pages/homepage.component';
+import HomePage from './pages/homepage/homepage.component';
+import Header from './components/header/header.component';
+import ShopPage from './pages/shoppage/shoppage.component';
 
-const Shop = (props) => {
- 
- console.log(props)
- return ( <div>
 
-   <Link to= {`${props.match.url}/zero`}>go to zero </Link>
-    <h1> Shop List Page </h1>
-  </div> );
-}
 
 
  const ShopCategory = (props) => {
@@ -27,10 +21,13 @@ const Shop = (props) => {
 function App() {
   return (
     <div>
+
+            <Header/>
+
       <Switch>
 
             <Route exact path="/" component={HomePage}/>
-            <Route exact path="/shop" component={Shop}/>
+            <Route exact path="/shop" component={ShopPage}/>
             <Route path = "/shop/:shopCategory" component = {ShopCategory}/>
       </Switch>
       
