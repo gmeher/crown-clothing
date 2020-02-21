@@ -26,6 +26,53 @@ provider.setCustomParameters({
 
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
+export const createUserProfileDocument = async (userAuth, ...additionalData) => {
+  if(!userAuth) return;
+
+  function sleep(milliseconds) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+      currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+  }
+
+
+  if(additionalData){
+    sleep(1000);
+  }
+  const userRef = firestore.doc(`users/${userAuth.uid}`);
+  const snapShot = await userRef.get(); 
+
+  if(!snapShot.exists){
+    
+    const { displayName, email } = userAuth;
+    const createdAt = new Date();
+ 
+    console.log(...additionalData);
+    try{
+      await userRef.set(Object.assign(
+        {
+          displayName,
+          email,
+          createdAt,
+        },
+        ...additionalData
+      ));
+
+      
+    }catch(error){
+      console.log('error creating user', error.message);
+    }
+  }else{
+    console.log(`Welcome Back ${await (await userRef.get()).data().displayName}`)
+  }
+
+  
+
+  return userRef;
+}
+
 export default firebase;
 
 
