@@ -1,6 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
+import {selectShowCartDropdown} from '../../redux/cart/cart.selector';
+import {selectCurrentUser} from '../../redux/user/user.selector';
+import {createStructuredSelector} from 'reselect';
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 import CartIcon from '../cart-icon/cart-icon.component';
 import CartDropdown from '../cart-dropdown/cart-dropdown.component';
@@ -49,11 +52,12 @@ const Header = ({ currentUser, showCartDropdown }) => {
 }
 
 
-const mapStateToProps = ({ user: {currentUser}, cart: {showCartDropdown} }) => ({
-    currentUser,
-    showCartDropdown
+const mapStateToProps = createStructuredSelector ({
+    currentUser : selectCurrentUser,
+    showCartDropdown : selectShowCartDropdown
 })
 
+//using createStructuredSelector just to shy away from repetative use of selectCurrentUser(state).
 
 
 export default connect(mapStateToProps)(Header);
