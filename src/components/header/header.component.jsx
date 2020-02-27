@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {selectShowCartDropdown} from '../../redux/cart/cart.selector';
 import {selectCurrentUser} from '../../redux/user/user.selector';
@@ -7,39 +6,40 @@ import {createStructuredSelector} from 'reselect';
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 import CartIcon from '../cart-icon/cart-icon.component';
 import CartDropdown from '../cart-dropdown/cart-dropdown.component';
-import './header.styles.scss';
 import {auth} from '../../firebase/firebase.utils';
+
+import {HeaderContainer, OptionsContainer, LogoContainer, LinkOptionContainerStyles} from './header.styles'
 
 const Header = ({ currentUser, showCartDropdown }) => {
     return(
-        <div className="header">
-            <Link className="logo-container" to = "/">
+        <HeaderContainer>
+            <LogoContainer to = "/">
 
                 <Logo className = "logo"/>
-            </Link>
+            </LogoContainer>
 
 
-            <div className="options">
-                <Link className = "option" to="/shop">
+            <OptionsContainer>
+                <LinkOptionContainerStyles to="/shop">
                     SHOP
-                </Link>
-                <Link className = "option" to = "/contact">
+                </LinkOptionContainerStyles>
+                <LinkOptionContainerStyles to = "/contact">
                     CONTACT
-                </Link>
+                </LinkOptionContainerStyles>
                 {
                     currentUser ? (
-                        <div className="option" onClick = {()=>auth.signOut()}>
+                        <LinkOptionContainerStyles as='div' onClick = {()=>auth.signOut()}>
                             SIGN OUT
-                        </div>
+                        </LinkOptionContainerStyles>
                     ) : ( 
-                        <Link className="option" to="/signin"> SIGN IN</Link>
+                        <LinkOptionContainerStyles to="/signin"> SIGN IN</LinkOptionContainerStyles>
                     )
                     
                 }
 
                 <CartIcon />
 
-            </div>
+            </OptionsContainer>
             {    
                 showCartDropdown ? (
                     <CartDropdown />
@@ -47,7 +47,7 @@ const Header = ({ currentUser, showCartDropdown }) => {
                    
             }
 
-        </div>
+        </HeaderContainer>
     )
 }
 
