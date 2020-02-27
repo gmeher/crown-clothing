@@ -24,11 +24,22 @@ const invertedStyles = css`
     }
 `;
 
+const addToCartButtonStyles = css`
+    display: flex;
+    width: 80%;
+    opacity: 0.7;
+    position: absolute;
+    top: 255px;
+`;
+
 const getButtonStyles = props => {
     if (props.googleSignIn)
         return googleSignInStyles
     return props.inverted && invertedStyles
 }
+const getAddToCartButtonStyles = (props) =>{
+    return props.addToCart && addToCartButtonStyles
+} 
 
 export const CustomButtonContainer = styled.button`
 
@@ -57,6 +68,7 @@ export const CustomButtonContainer = styled.button`
         }
 
    ${getButtonStyles}
+   ${getAddToCartButtonStyles}
 
    
 
