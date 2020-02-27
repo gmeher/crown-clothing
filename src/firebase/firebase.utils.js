@@ -48,8 +48,7 @@ export const createUserProfileDocument = async (userAuth, ...additionalData) => 
     
     const { displayName, email } = userAuth;
     const createdAt = new Date();
- 
-    console.log(...additionalData);
+
     try{
       await userRef.set(Object.assign(
         {
@@ -72,6 +71,37 @@ export const createUserProfileDocument = async (userAuth, ...additionalData) => 
 
   return userRef;
 }
+
+
+
+
+const arrayToObject = (array) => {
+ return array.reduce( (obj,item) => {
+    obj[item.title] = item;
+    return obj;
+  }, {} )
+}
+
+export const convertCollectionSnapshotToMap = (collections) => {
+ 
+  const collectionsMapArray = collections.docs.map(doc => {
+    const {routeName,title,items} = doc.data();
+    return ({
+      id: doc.id,
+      routeName,
+      title,
+      items
+    });
+  } )
+
+  return arrayToObject(collectionsMapArray);
+
+}
+
+
+
+
+
 
 export default firebase;
 
