@@ -77,7 +77,7 @@ export const createUserProfileDocument = async (userAuth, ...additionalData) => 
 
 const arrayToObject = (array) => {
  return array.reduce( (obj,item) => {
-    obj[item.title] = item;
+    obj[item.title.toLowerCase()] = item;
     return obj;
   }, {} )
 }
